@@ -12,7 +12,7 @@ namespace ListTask
     internal class Program
     {
         // Function to filter out non-palindrome strings
-        static List<string> FilterPalindromes(List<string> strings)
+        public static List<string> FilterPalindromes(List<string> strings)
         {
             List<string> palindromes = new List<string>();
             for (int i = 0; i < strings.Count; i++)
@@ -20,9 +20,9 @@ namespace ListTask
                 string str = strings[i];
                 // Check if the string is a palindrome
                 bool isPalindrome = true;
-                for (int j = 0; j < str.Length / 2; j++)
+                for (int j = 0; j < str.Length / 2; j++) // Compare with all characters in the string
                 {
-                    if (str[j] != str[str.Length - 1 - j])
+                    if (str[j] != str[str.Length - 1 - j]) // Check if the characters are equal
                     {
                         isPalindrome = false;
                         break;
@@ -39,8 +39,13 @@ namespace ListTask
         static void Main(string[] args)
         {
 
-            // Create a list of integers
+            // ==========================================================
+            // List Task
+            // ==========================================================
 
+            // 1. Top Most N Frequent Number(s)
+
+            // Create a list of integers
             List<int> numbers = new List<int>();
 
             // input numbers from the user
@@ -54,9 +59,12 @@ namespace ListTask
                 {
                     break;
                 }
-                if (int.TryParse(input, out int number))
+
+                // Check if the input is a valid integer
+                if (int.TryParse(input, out int number)) // Try to parse the input as an integer
                 {
-                    numbers.Add(number);
+                    // Add the number to the list
+                     numbers.Add(number);
                 }
                 else
                 {
@@ -69,107 +77,60 @@ namespace ListTask
             Console.WriteLine("You entered the following numbers:");
             for (int i = 0; i < numbers.Count; i++)
             {
-                Console.WriteLine($"Number {i + 1}: {numbers[i]}");
+                Console.WriteLine($"Number {i + 1} : {numbers[i]}");
             }
 
             // Find the most N frequent number(s)
+            List<int> mostFrequentNumbers = new List<int>();
             int count = 0;
             for (int i = 0; i < numbers.Count; i++)
             {
+                // Count the frequency of the current number
                 int frequency = 0;
-                for (int j = 0; j < numbers.Count; j++)
+                for (int j = 0; j < numbers.Count; j++) // Compare with all numbers in the list
                 {
                     if (numbers[i] == numbers[j])
                     {
                         frequency++;
                     }
                 }
+                // Check if the frequency is greater than the maximum frequency
                 if (frequency > count)
                 {
                     count = frequency;
                 }
-            }
-            Console.WriteLine($"The most frequent number(s) appear {count} times.");
-
-            // Find the most N frequent number(s)
-            List<int> mostFrequentNumbers = new List<int>();
-            for (int i = 0; i < numbers.Count; i++)
-            {
-                int frequency = 0;
-                for (int j = 0; j < numbers.Count; j++)
+                // Check if the frequency is equal to the maximum frequency and if the number is not already in the list
+                if (frequency == count && !mostFrequentNumbers.Contains(numbers[i])) // Check for duplicates
                 {
-                    if (numbers[i] == numbers[j])
-                    {
-                        frequency++;
-                    }
-                }
-                if (frequency == count && !mostFrequentNumbers.Contains(numbers[i]))
-                {
+                    // Add the number to the list of most frequent numbers
                     mostFrequentNumbers.Add(numbers[i]);
                 }
             }
+            Console.WriteLine($"The most frequent number(s) appear {count} times.");
+
 
             // Display the most frequent number(s)
             Console.WriteLine("The most frequent number(s):");
             for (int i = 0; i < mostFrequentNumbers.Count; i++)
             {
-                Console.WriteLine($"Number is : {mostFrequentNumbers[i]}");
+                Console.WriteLine($"Number {i + 1} is : {mostFrequentNumbers[i]}");
             }
 
-            // Find the least N frequent number(s)
-            int minCount = int.MaxValue;
-            for (int i = 0; i < numbers.Count; i++)
-            {
-                int frequency = 0;
-                for (int j = 0; j < numbers.Count; j++)
-                {
-                    if (numbers[i] == numbers[j])
-                    {
-                        frequency++;
-                    }
-                }
-                if (frequency < minCount)
-                {
-                    minCount = frequency;
-                }
-            }
-            Console.WriteLine($"The least frequent number(s) appear {minCount} times.");
-
-            // Find the least N frequent number(s)
-            List<int> leastFrequentNumbers = new List<int>();
-            for (int i = 0; i < numbers.Count; i++)
-            {
-                int frequency = 0;
-                for (int j = 0; j < numbers.Count; j++)
-                {
-                    if (numbers[i] == numbers[j])
-                    {
-                        frequency++;
-                    }
-                }
-                if (frequency == minCount && !leastFrequentNumbers.Contains(numbers[i]))
-                {
-                    leastFrequentNumbers.Add(numbers[i]);
-                }
-            }
-
-            // Display the least frequent number(s)
-            Console.WriteLine("The least frequent number(s):");
-            for (int i = 0; i < leastFrequentNumbers.Count; i++)
-            {
-                Console.WriteLine($"Number is : {leastFrequentNumbers[i]}");
-            }
+            // =============================================================
 
             // 2. Palindrome Filter
 
             List<string> strings = new List<string>();
 
             // input strings from the user
-            Console.WriteLine("Enter N strings (type 'exit' to finish):");
+            Console.WriteLine("Enter M strings (type 'exit' to finish):");
             int M = int.Parse(Console.ReadLine());
-            for (int i = 0; i < M; i++)
+
+            // loop to get M strings from the user
+            for (int i = 0; i < M; i++) // Loop M times
             {
-                Console.Write($"Enter string {i + 1}: ");
+                // Get the string from the user
+                Console.Write($"Enter string {i + 1} : ");
                 string input = Console.ReadLine();
                 if (input.ToLower() == "exit")
                 {
@@ -181,12 +142,12 @@ namespace ListTask
             // Check if the string is a palindrome
             for (int i = 0; i < strings.Count; i++)
             {
-                string str = strings[i];
                 // Check if the string is a palindrome
+                string str = strings[i]; // Get the string from the list
                 bool isPalindrome = true;
-                for (int j = 0; j < str.Length / 2; j++)
+                for (int j = 0; j < str.Length / 2; j++) // Compare with all characters in the string
                 {
-                    if (str[j] != str[str.Length - 1 - j])
+                    if (str[j] != str[str.Length - 1 - j]) // Check if the characters are equal
                     {
                         isPalindrome = false;
                         break;
@@ -206,20 +167,23 @@ namespace ListTask
             Console.WriteLine("You entered the following strings:");
             for (int i = 0; i < strings.Count; i++)
             {
-                Console.WriteLine($"String is : {strings[i]}");
+                Console.WriteLine($"String {i + 1} is : {strings[i]}");
             }
 
             // Filter out non-palindrome strings
             List<string> palindromes = FilterPalindromes(strings);
+
             // Display the palindromes
             Console.WriteLine("The palindromes are:");
             for (int i = 0; i < palindromes.Count; i++)
             {
-                Console.WriteLine($"Palindrome is : {palindromes[i]}");
+                Console.WriteLine($"Palindrome {i + 1} is : {palindromes[i]}");
             }
+            // ===========================================================
 
             // 3. Shift List Elements
 
+            // Create a list of integers
             List<int> numbersToShift = new List<int>();
 
             // input numbers from the user
@@ -227,14 +191,15 @@ namespace ListTask
             int K = int.Parse(Console.ReadLine());
             for (int i = 0; i < K; i++)
             {
-                Console.Write($"Enter number {i + 1}: ");
+                Console.Write($"Enter number {i + 1} : ");
                 string input = Console.ReadLine();
                 if (input.ToLower() == "exit")
                 {
                     break;
                 }
-                if (int.TryParse(input, out int number))
+                if (int.TryParse(input, out int number)) // Try to parse the input as an integer
                 {
+                    // Add the number to the list
                     numbersToShift.Add(number);
                 }
                 else
@@ -248,7 +213,7 @@ namespace ListTask
             Console.WriteLine("You entered the following numbers:");
             for (int i = 0; i < numbersToShift.Count; i++)
             {
-                Console.WriteLine($"Number {i + 1}: {numbersToShift[i]}");
+                Console.WriteLine($"Number {i + 1} : {numbersToShift[i]}");
             }
 
             // Rotate the elements of the list to the right by k steps
@@ -256,23 +221,30 @@ namespace ListTask
             int steps = int.Parse(Console.ReadLine());
             for (int i = 0; i < steps; i++)
             {
-                int lastElement = numbersToShift[numbersToShift.Count - 1];
-                for (int j = numbersToShift.Count - 1; j > 0; j--)
+                // Store the last element and shift the rest to the right
+
+                int lastElement = numbersToShift[numbersToShift.Count - 1]; // Store the last element
+                for (int j = numbersToShift.Count - 1; j > 0; j--) // Shift Elemnts 
                 {
+                    // Shift elements to the right
                     numbersToShift[j] = numbersToShift[j - 1];
                 }
-                numbersToShift[0] = lastElement;
+                numbersToShift[0] = lastElement; // Place the last element at the beginning
             }
             // Display the rotated list
             Console.WriteLine("The rotated list is:");
             for (int i = 0; i < numbersToShift.Count; i++)
             {
-                Console.WriteLine($"Number {i + 1}: {numbersToShift[i]}");
+                Console.WriteLine($"Number {i + 1} : {numbersToShift[i]}");
             }
 
+            // ===========================================================
+
             // 4. Unique Words Extractor
-            // Write a program that takes a paragraph from the user, splits it into words, and stores only the unique words in a List<string>.Then, sort the list alphabetically and print it.
+
+            // Create a list to store unique words
             List<string> uniqueWords = new List<string>();
+
             // input paragraph from the user
             Console.WriteLine("Enter a paragraph (type 'exit' to finish):");
             string paragraph = Console.ReadLine();
@@ -282,22 +254,28 @@ namespace ListTask
             }
 
             // Split the paragraph into words from the list
-            string[] words = paragraph.Split(new char[] { ' ', ',', '.', '!', '?' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] words = paragraph.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Split by spaces
 
             // Display the list of words
             Console.WriteLine("You entered the following words:");
-            for (int i = 0; i < words.Length; i++)
+            for (int i = 0; i < words.Length; i++) 
             {
-                Console.WriteLine($"Word {i + 1}: {words[i]}");
+                Console.WriteLine($"Word {i + 1} : {words[i]}");
             }
 
             // Store only unique words in the list
             for (int i = 0; i < words.Length; i++)
             {
                 string word = words[i].ToLower();
-                if (!uniqueWords.Contains(word))
+                if (!uniqueWords.Contains(word)) // Check for duplicates
                 {
+                    // Add the word to the list of unique words
                     uniqueWords.Add(word);
+                }
+                else
+                {
+                    // If the word is already in the list, do not add it again
+                    Console.WriteLine($"Word '{word}' is already in the list.");
                 }
             }
 
@@ -310,6 +288,7 @@ namespace ListTask
             {
                 Console.WriteLine($"Word {i + 1}: {uniqueWords[i]}");
             }
+
         }
     }
 }
